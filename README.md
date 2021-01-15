@@ -69,18 +69,157 @@ other players to play a tennis match.
 - *email* - String type, not null
 - *password* - String type, not null
 
-## Endpoints
-#### */register-user*
+## Dto Classes
+### LoginDto
+```$xslt
+    @NotNull
+    private String email;
+    @NotNull
+    private String password;
+```
+### MatchInvitationDto
+```$xslt
+    private int id;
+    @NotNull
+    private int senderUserId;
+    @NotNull
+    private int receiverUserId;
+    private TennisCourtReservation reservation;
+```
+### NewUserDto
+```$xslt
+    private int id;
+    @NotNull
+    private String name;
+    @NotNull
+    private Integer age;
+    @NotNull
+    private String city;
+    @NotNull
+    private String phoneNumber;
+    @NotNull
+    private String email;
+    @NotNull
+    private String password;
+```
+### PracticeDto
+```$xslt
+    private int id;
+    @NotNull
+    private int userId;
+    private TennisCourtReservation reservation;
+```
+### TennisBaseDto
+```$xslt
+    private int id;
+    @NotNull
+    private String name;
+    @NotNull
+    private String address;
+```
+### TennisCourtDto
+```$xslt
+    private int id;
+    @NotNull
+    private int number;
+    @NotNull
+    private int baseId;
+```
+### TennisCourtListReservationsDto
+```$xslt
+    @NotNull
+    private int courtNumber;
+    private List<TennisCourtReservation> reservations;
+```
+### UserDto
+```$xslt
+    private int id;
+    @NotNull
+    private String name;
+    @NotNull
+    private Integer age;
+    @NotNull
+    private String city;
+    @NotNull
+    private String phoneNumber;
+    @NotNull
+    private String email;
+```
 
-#### */login*
-#### */edit/profile*
-#### */practice/get-practices?userId={id}*
-#### */practice/add-practices*
-#### */tennis-base/get-all*
-#### */tennis-base/get-court-reservations/{courtId}*
-#### */tennis-base/create*
-#### */tennis-base/add-court/{baseId}/{courtNumber}*
-#### */tennis-match/create-invitation*
-#### */tennis-match/get-invitations/{userId}*
-#### */tennis-match/accept-invitation/{invitationId}*
-#### */tennis-match/refuse-invitation/{invitationId}*
+## Endpoints
+### POST */register-user*
+**Description:**  Register a new user
+
+**Request body:** NewUserDto
+
+**Response:** UserDto
+
+### POST */login*
+**Description:** Log into the platform
+
+**Request body:** LoginDto
+
+**Response:** UserDto
+
+### PUT */edit/profile*
+**Description:** Let's a user edit their profile details
+
+**Request body:** UserDto
+
+**Response:** UserDto
+
+### GET */practice/get-practices?userId={id}*
+**Description:** Get a list with all the tennis practices and tennis court reservations a user has
+
+**Response:** List of PracticeDto
+
+### POST */practice/add-practices*
+**Description:** Create a new tennis practice and reserve a tennis court
+
+**Request body:** PracticeDto
+
+**Response:** PracticeDto
+
+### GET */tennis-base/get-all*
+**Description:** Get a list with details about all the tennis bases registered in the app
+
+**Response:** List of TennisBaseDto
+
+### GET */tennis-base/get-court-reservations/{tennisBaseId}*
+**Description:** For a certain tennis base, get all the reservations in all the courts. It can be used to create a calendar to view the time intervals where a court is free
+
+**Response:** List of TennisCourtListReservationsDto
+
+### POST */tennis-base/create*
+**Description:** Register a new tennis base into the app
+
+**Request body:** TennisBaseDto
+
+**Response:** TennisBaseDto
+
+### POST */tennis-base/add-court/{baseId}/{courtNumber}*
+**Description:** Register a new tennis court for a tennis base
+
+**Response:** TennisCourtDto
+
+### POST */tennis-match/create-invitation*
+**Description:** Create a match invitation and send it to another player. This will also reserve the tennis court
+
+**Request body:** MatchInvitationDto
+
+**Response:** MatchInvitationDto
+
+### GET */tennis-match/get-invitations/{userId}*
+**Description:** Get all match invitations you received through the app
+
+**Response:** List of MatchInvitationDto
+
+### POST */tennis-match/accept-invitation/{invitationId}*
+**Description:** Accept a match invitation
+
+**Response:** String "Message sent"
+
+### POST */tennis-match/refuse-invitation/{invitationId}*
+**Description:** Refuse a match invitation. This will also change the tennis court from reserved to free
+
+**Response:** String "Message sent"

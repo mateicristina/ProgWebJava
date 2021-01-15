@@ -89,16 +89,6 @@ public class UserRepository {
 
     public User updateUser(User user) {
         String sql = "UPDATE users set name = ?, age = ?, city = ?, phoneNumber = ? where id = ?";
-        RowMapper<User> mapper = ((resultSet, i) ->
-                new User(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("age"),
-                        resultSet.getString("city"),
-                        resultSet.getString("phoneNumber"),
-                        resultSet.getString("email")
-                ));
-
         jdbcTemplate.update(sql,
                 user.getName(),
                 user.getAge(),
@@ -113,10 +103,4 @@ public class UserRepository {
         String sql = "DELETE FROM users";
         jdbcTemplate.update(sql);
     }
-
-    public int countProducts() {
-        String sql = "select count(*) from users";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
-    }
-
 }
