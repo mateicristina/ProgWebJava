@@ -223,3 +223,6 @@ other players to play a tennis match.
 **Description:** Refuse a match invitation. This will also change the tennis court from reserved to free
 
 **Response:** String "Message sent"
+
+## Testing
+To test the endpoints you can use Postman. The collection is saved here: https://www.getpostman.com/collections/dfdaf7a19114d011cd85
